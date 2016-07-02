@@ -1,8 +1,21 @@
 package domain;
 
+import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
+
+@Entity
 public class Curso implements BaseEntity<Long> {
+	@Id
+	@SequenceGenerator(name = "Curso_ID_GENERATOR", sequenceName = "Curso_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Curso_ID_GENERATOR")
 	private Long id;
 
 	private String codigo;
@@ -10,7 +23,9 @@ public class Curso implements BaseEntity<Long> {
 	private String nombre;
 
 	private Integer creditos;
-
+	
+	@ManyToMany
+    @JoinTable(name="curso_prerequisitos")
 	private List<Curso> prerequisitos;
 
 	@Override
